@@ -5,16 +5,34 @@ const api = axios.create({
   baseURL: 'https://rickandmortyapi.com/api',
 });
 
-export const fetchCharacters = (page = 1, search = '', filters = {}) => {
-  const {status, gender, species} = filters;
-  let query = `?page=${page}`;
-  if (search) query += `&name=${search}`;
-  if (status) query += `&status=${status}`;
-  if (gender) query += `&gender=${gender}`;
-  if (species) query += `&species=${species}`;
-
-  return api.get(`/character${query}`);
+// Function to fetch characters with pagination, search, and filters
+export const fetchCharacters = (page = 1) => {
+  return api.get(`/character/?page=${page}`).catch(error => {
+    console.error('Error fetching characters:', error);
+    throw error;
+  });
 };
-export const fetchCharacterById = id => api.get(`/character/${id}`);
-export const fetchLocations = (page = 1) => api.get(`/location?page=${page}`);
-export const fetchEpisodes = (page = 1) => api.get(`/episode?page=${page}`);
+
+// Fetch character details by ID
+export const fetchCharacterById = id => {
+  return api.get(`/character/${id}`).catch(error => {
+    console.error('Error fetching character by ID:', error);
+    throw error;
+  });
+};
+
+// Fetch locations with pagination
+export const fetchLocations = (page = 1) => {
+  return api.get(`/location?page=${page}`).catch(error => {
+    console.error('Error fetching locations:', error);
+    throw error;
+  });
+};
+
+// Fetch episodes with pagination
+export const fetchEpisodes = (page = 1) => {
+  return api.get(`/episode?page=${page}`).catch(error => {
+    console.error('Error fetching episodes:', error);
+    throw error;
+  });
+};
